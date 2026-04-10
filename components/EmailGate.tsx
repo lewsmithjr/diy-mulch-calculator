@@ -60,11 +60,24 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
 
   return (
     <div className="w-full max-w-lg mt-8">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
+      {/* Kit.com form — centered, above the value props */}
+      <div className="flex justify-center mb-4">
+        <div ref={formContainerRef} className="w-full" />
+      </div>
+
+      <p className="text-xs text-gray-400 text-center mb-6">
+        No spam. Unsubscribe anytime.{" "}
+        <a href="/privacy" className="underline hover:text-gray-600">
+          Privacy Policy
+        </a>
+      </p>
+
+      {/* What you'll get */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
         <h2 className="text-xl font-semibold text-[var(--color-rdiy-dark)] mb-3">
           What you&apos;ll get:
         </h2>
-        <ul className="space-y-2 text-gray-600 mb-6">
+        <ul className="space-y-2 text-gray-600">
           <li className="flex items-start gap-2">
             <span className="text-[var(--color-rdiy-green)] font-bold mt-0.5">✓</span>
             Calculate cubic yards for bulk mulch deliveries
@@ -82,16 +95,6 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
             Works for rectangular and circular beds
           </li>
         </ul>
-
-        {/* Kit.com script is injected into this div via useEffect */}
-        <div ref={formContainerRef} />
-
-        <p className="text-xs text-gray-400 text-center mt-3">
-          No spam. Unsubscribe anytime.{" "}
-          <a href="/privacy" className="underline hover:text-gray-600">
-            Privacy Policy
-          </a>
-        </p>
       </div>
     </div>
   );
