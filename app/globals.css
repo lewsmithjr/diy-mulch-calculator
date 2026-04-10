@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ============================================================
+   RDIY BRAND COLORS — Baltimore Ravens scheme (purple/black/white)
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-rdiy-green:       #241773;   /* Ravens purple (primary)      */
+  --color-rdiy-green-light: #EDE9F7;   /* light purple tint            */
+  --color-rdiy-green-dark:  #180F52;   /* deep purple (hover/active)   */
+  --color-rdiy-brown:       #000000;   /* Ravens black (secondary)     */
+  --color-rdiy-brown-light: #F2F2F2;   /* light gray tint              */
+  --color-rdiy-cream:       #FAFAFA;   /* page background              */
+  --color-rdiy-dark:        #000000;   /* body text                    */
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #FAFAFA;
+  --foreground: #000000;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media print {
+  @page { margin: 1in; }
+  body { background: white; color: black; }
 }
