@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Script from "next/script";
+import { useEffect, useRef, useState } from "react";
 import MulchCalculator from "@/components/MulchCalculator";
 
 interface EmailGateProps {
@@ -10,15 +9,15 @@ interface EmailGateProps {
 
 export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
   const [unlocked, setUnlocked] = useState(initiallyUnlocked);
+  const scriptInjected = useRef(false);
 
   useEffect(() => {
     const reveal = () => setUnlocked(true);
 
-    // Method 1: Kit.com custom JS event (fires on same-page success)
+    // Method 1: Kit.com custom JS event
     document.addEventListener("formkit:submit", reveal);
 
-    // Method 2: MutationObserver fallback — watches for Kit.com's success
-    // message element appearing in the DOM, in case the JS event doesn't fire.
+    // Method 2: MutationObserver — watches for Kit.com's success element
     const observer = new MutationObserver(() => {
       if (document.querySelector(".formkit-alert-success")) {
         reveal();
@@ -26,6 +25,18 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
+
+    // Method 3: Dynamically inject the Kit.com script so it lands inline
+    // in the DOM exactly where the mount point div is — this is more reliable
+    // than next/script which appends to the document body.
+    if (!scriptInjected.current) {
+      scriptInjected.current = true;
+      const script = document.createElement("script");
+      script.src = "https://reluctant-diyers.kit.com/65d48e0bd2/index.js";
+      script.async = true;
+      script.setAttribute("data-uid", "65d48e0bd2");
+      document.body.appendChild(script);
+    }
 
     return () => {
       document.removeEventListener("formkit:submit", reveal);
@@ -49,9 +60,6 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
 
   return (
     <div className="w-full max-w-lg mt-8">
-      {/* ============================================================
-          VALUE PROP SECTION
-          ============================================================ */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
         <h2 className="text-xl font-semibold text-[var(--color-rdiy-dark)] mb-3">
           What you&apos;ll get:
@@ -75,13 +83,8 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
           </li>
         </ul>
 
-        {/* Kit.com inline form — renders itself into the page */}
-        <Script
-          async
-          data-uid="65d48e0bd2"
-          src="https://reluctant-diyers.kit.com/65d48e0bd2/index.js"
-          strategy="afterInteractive"
-        />
+        {/* Kit.com mounts its form here — the script in useEffect targets this div */}
+        <div data-uid="65d48e0bd2" />
 
         <p className="text-xs text-gray-400 text-center mt-3">
           No spam. Unsubscribe anytime.{" "}
