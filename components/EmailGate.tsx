@@ -9,6 +9,7 @@ interface EmailGateProps {
 
 export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
   const [unlocked, setUnlocked] = useState(initiallyUnlocked);
+  const formContainerRef = useRef<HTMLDivElement>(null);
   const scriptInjected = useRef(false);
 
   useEffect(() => {
@@ -26,16 +27,15 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // Method 3: Dynamically inject the Kit.com script so it lands inline
-    // in the DOM exactly where the mount point div is — this is more reliable
-    // than next/script which appends to the document body.
-    if (!scriptInjected.current) {
+    // Inject the Kit.com script into the container div so the form
+    // renders inside the card rather than appending to document.body.
+    if (!scriptInjected.current && formContainerRef.current) {
       scriptInjected.current = true;
       const script = document.createElement("script");
       script.src = "https://reluctant-diyers.kit.com/65d48e0bd2/index.js";
       script.async = true;
       script.setAttribute("data-uid", "65d48e0bd2");
-      document.body.appendChild(script);
+      formContainerRef.current.appendChild(script);
     }
 
     return () => {
@@ -83,8 +83,8 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
           </li>
         </ul>
 
-        {/* Kit.com mounts its form here — the script in useEffect targets this div */}
-        <div data-uid="65d48e0bd2" />
+        {/* Kit.com script is injected into this div via useEffect */}
+        <div ref={formContainerRef} />
 
         <p className="text-xs text-gray-400 text-center mt-3">
           No spam. Unsubscribe anytime.{" "}
