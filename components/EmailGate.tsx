@@ -120,12 +120,12 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
             </ul>
           </div>
 
-          {/* Kit.com form */}
-          <div className="flex justify-center mb-4">
-            <div ref={formContainerRef} className="w-full" />
-          </div>
+        </div>
 
-          <p className="text-xs text-gray-400 text-center mb-6">
+        {/* Kit.com form — wider container, centered */}
+        <div className="w-full max-w-2xl">
+          <div ref={formContainerRef} className="w-full" />
+          <p className="text-xs text-gray-400 text-center mt-4 mb-6">
             No spam. Unsubscribe anytime.{" "}
             <a href="/privacy" className="underline hover:text-gray-600">
               Privacy Policy
