@@ -280,7 +280,7 @@ export default function MulchCalculator() {
             </div>
             {outputMode === "bags" ? (
               <>
-                <div className="text-5xl font-bold mb-1">{bagResult}</div>
+                <div className="text-5xl font-bold mb-1" style={{ fontFamily: "var(--font-fraunces)" }}>{bagResult}</div>
                 <div className="text-lg opacity-90">{bagSize} cu ft bags</div>
                 <p className="text-xs opacity-70 mt-3">
                   Based on {totalSqft.toFixed(0)} sq ft at {depth}&quot; deep ÷{" "}
@@ -289,7 +289,7 @@ export default function MulchCalculator() {
               </>
             ) : (
               <>
-                <div className="text-5xl font-bold mb-1">
+                <div className="text-5xl font-bold mb-1" style={{ fontFamily: "var(--font-fraunces)" }}>
                   {bulkResult.toFixed(2)}
                 </div>
                 <div className="text-lg opacity-90">cubic yards</div>
