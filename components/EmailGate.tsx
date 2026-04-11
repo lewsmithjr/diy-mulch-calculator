@@ -13,7 +13,16 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
   const scriptInjected = useRef(false);
 
   useEffect(() => {
-    const reveal = () => setUnlocked(true);
+    // Check localStorage on every visit — if they've submitted before, skip the form
+    if (localStorage.getItem("mulch_calc_unlocked") === "true") {
+      setUnlocked(true);
+      return;
+    }
+
+    const reveal = () => {
+      localStorage.setItem("mulch_calc_unlocked", "true");
+      setUnlocked(true);
+    };
 
     // Method 1: Kit.com custom JS event
     document.addEventListener("formkit:submit", reveal);
