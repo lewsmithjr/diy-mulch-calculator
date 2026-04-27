@@ -115,14 +115,25 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
         row.querySelectorAll<HTMLElement>("[data-element='column']").forEach((col) => {
           const hasFields = col.querySelector("input, .seva-fields, .formkit-fields");
           if (hasFields) {
-            // Fields column — expand to full width
+            // Fields column — full width, no background
             col.style.width = "100%";
             col.style.maxWidth = "100%";
             col.style.backgroundColor = "transparent";
-            col.style.padding = "0";
+            col.style.padding = "16px 0 0 0";
           } else {
-            // Photo column (no inputs) — hide entirely
-            col.style.display = "none";
+            // Photo column — show but cap its height so it doesn't dominate
+            col.style.width = "100%";
+            col.style.maxWidth = "100%";
+            col.style.maxHeight = "180px";
+            col.style.overflow = "hidden";
+            col.style.borderRadius = "8px";
+            // Scale any img inside to cover the constrained height
+            col.querySelectorAll<HTMLElement>("img").forEach((img) => {
+              img.style.width = "100%";
+              img.style.height = "180px";
+              img.style.objectFit = "cover";
+              img.style.objectPosition = "center 30%";
+            });
           }
         });
 
