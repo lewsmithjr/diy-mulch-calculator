@@ -112,6 +112,11 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
         // Switch the 2-col flex row to a simple block so columns stack
         row.style.display = "block";
 
+        // Move the photo column to the bottom (after the fields)
+        const photoCol = Array.from(row.querySelectorAll<HTMLElement>("[data-element='column']"))
+          .find(col => !col.querySelector("input, .seva-fields, .formkit-fields"));
+        if (photoCol) row.appendChild(photoCol);
+
         row.querySelectorAll<HTMLElement>("[data-element='column']").forEach((col) => {
           const hasFields = col.querySelector("input, .seva-fields, .formkit-fields");
           if (hasFields) {
