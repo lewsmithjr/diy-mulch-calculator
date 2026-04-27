@@ -53,24 +53,33 @@ export default function Hero() {
         </p>
 
         {/* Stat pills */}
-        <div className="flex gap-3 flex-wrap justify-center">
-          <div className="bg-white/[0.08] border border-white/[0.15] rounded-lg px-4 py-2 text-left text-sm">
+        <div className="flex gap-4 flex-wrap justify-center w-full">
+          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
             <strong
-              className="block text-lg leading-tight"
+              className="block text-5xl leading-none mb-1"
               style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
             >
               ~30%
             </strong>
-            average overage when estimating by eye
+            <span className="text-sm text-white/80 leading-snug">avg overage when<br />estimating by eye</span>
           </div>
-          <div className="bg-white/[0.08] border border-white/[0.15] rounded-lg px-4 py-2 text-left text-sm">
+          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
             <strong
-              className="block text-lg leading-tight"
+              className="block text-5xl leading-none mb-1"
               style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
             >
               2 min
             </strong>
-            to get your exact number
+            <span className="text-sm text-white/80 leading-snug">to get your<br />exact number</span>
+          </div>
+          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
+            <strong
+              className="block text-5xl leading-none mb-1"
+              style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
+            >
+              $0
+            </strong>
+            <span className="text-sm text-white/80 leading-snug">completely<br />free to use</span>
           </div>
         </div>
       </div>

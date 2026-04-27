@@ -375,7 +375,7 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
         {/* ── EMAIL GATE — shown when result is ready but user hasn't submitted ── */}
         {showGate && (
           <section className="text-center pt-2">
-            <p className="text-3xl font-extrabold uppercase tracking-wide text-[var(--color-rdiy-green-dark)] mb-2" style={{ fontFamily: "var(--font-fraunces)" }}>
+            <p className="text-2xl font-extrabold uppercase tracking-wide text-[var(--color-rdiy-green-dark)] mb-2" style={{ fontFamily: "var(--font-fraunces)" }}>
               Your result is ready!
             </p>
             <p className="text-lg font-bold text-gray-600 mb-4">
