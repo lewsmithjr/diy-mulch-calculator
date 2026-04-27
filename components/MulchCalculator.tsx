@@ -379,13 +379,15 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
 
         {/* ── EMAIL GATE — shown when result is ready but user hasn't submitted ── */}
         {showGate && (
-          <section className="text-center pt-2">
-            <p className="text-2xl font-extrabold uppercase tracking-wide text-[var(--color-rdiy-green-dark)] mb-2" style={{ fontFamily: "var(--font-fraunces)" }}>
-              Your result is ready!
-            </p>
-            <p className="text-lg font-bold text-gray-600 mb-4">
-              Enter your email for instant access — no spam, unsubscribe anytime.
-            </p>
+          <section className="text-center">
+            <div className="bg-[var(--color-rdiy-green)] rounded-xl px-6 py-5 mb-4">
+              <p className="text-2xl font-extrabold uppercase tracking-wide text-white mb-1" style={{ fontFamily: "var(--font-fraunces)" }}>
+                Your result is ready!
+              </p>
+              <p className="text-base font-semibold text-white/80">
+                Enter your email for instant access — no spam, unsubscribe anytime.
+              </p>
+            </div>
             <div ref={formContainerRef} className="w-full" />
           </section>
         )}
