@@ -78,8 +78,19 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
     <>
       <Hero />
       <div className="flex flex-col flex-1 items-center px-4 pb-16 bg-[var(--color-rdiy-cream)]">
-        <div className="w-full max-w-lg mt-8">
-          {/* What you'll get — shown above the Kit.com form */}
+        {/* Kit.com form — wider container, centered */}
+        <div className="w-full max-w-2xl mt-8">
+          <div ref={formContainerRef} className="w-full" />
+          <p className="text-xs text-gray-400 text-center mt-4 mb-6">
+            No spam. Unsubscribe anytime.{" "}
+            <a href="/privacy" className="underline hover:text-gray-600">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
+
+        <div className="w-full max-w-lg">
+          {/* What you'll get — shown below the Kit.com form */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mb-6">
             <h2 className="text-xl font-semibold text-[var(--color-rdiy-dark)] mb-4">
               What&apos;s inside the calculator:
@@ -119,18 +130,6 @@ export default function EmailGate({ initiallyUnlocked }: EmailGateProps) {
               </li>
             </ul>
           </div>
-
-        </div>
-
-        {/* Kit.com form — wider container, centered */}
-        <div className="w-full max-w-2xl">
-          <div ref={formContainerRef} className="w-full" />
-          <p className="text-xs text-gray-400 text-center mt-4 mb-6">
-            No spam. Unsubscribe anytime.{" "}
-            <a href="/privacy" className="underline hover:text-gray-600">
-              Privacy Policy
-            </a>
-          </p>
         </div>
       </div>
     </>
