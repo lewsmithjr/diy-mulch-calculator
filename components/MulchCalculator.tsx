@@ -113,15 +113,16 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
         row.style.display = "block";
 
         row.querySelectorAll<HTMLElement>("[data-element='column']").forEach((col) => {
-          if (col.querySelector(".formkit-background")) {
-            // Photo column — hide entirely
-            col.style.display = "none";
-          } else {
-            // Fields column — expand to full width, remove inline bg color
+          const hasFields = col.querySelector("input, .seva-fields, .formkit-fields");
+          if (hasFields) {
+            // Fields column — expand to full width
             col.style.width = "100%";
             col.style.maxWidth = "100%";
             col.style.backgroundColor = "transparent";
             col.style.padding = "0";
+          } else {
+            // Photo column (no inputs) — hide entirely
+            col.style.display = "none";
           }
         });
 
