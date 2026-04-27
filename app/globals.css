@@ -32,54 +32,26 @@ body {
 }
 
 /* ── Kit.com form overrides ─────────────────────────────────────
-   Strip the large card layout (photo + oversized header) so the
-   form renders as a compact fields-only block inside our gate card.
+   Hide the large photo and heading; let Kit.com style everything
+   else. Ensure the field column expands to full width.
    ──────────────────────────────────────────────────────────────── */
-.formkit-form {
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  padding: 0 !important;
-  min-width: unset !important;
-}
 
-/* Hide the large photo */
+/* Hide the large photo column */
 .formkit-form .formkit-background {
   display: none !important;
 }
 
-/* Hide the "Get the Mulch Calculator" heading — we have our own copy above */
+/* Hide "Get the Mulch Calculator" heading — context is already above */
 .formkit-form .formkit-header {
   display: none !important;
 }
 
-/* Remove column layout padding */
-.formkit-form > div {
-  padding: 0 !important;
-  background: transparent !important;
+/* When the photo column is hidden, let the fields column fill the row */
+.formkit-form [data-style="full"] {
+  flex-direction: column !important;
 }
 
-/* Compact the fields */
-.formkit-form .formkit-field {
-  margin-bottom: 10px !important;
-}
-
-.formkit-form .formkit-field input {
-  font-size: 15px !important;
-  padding: 10px 14px !important;
-}
-
-/* Submit button — match site purple */
-.formkit-form .formkit-submit {
-  background: #241773 !important;
-  font-size: 15px !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
+.formkit-form .formkit-column {
   width: 100% !important;
-}
-
-/* Compact the privacy/guarantee text */
-.formkit-form .formkit-guarantee {
-  font-size: 12px !important;
-  margin-top: 8px !important;
+  max-width: 100% !important;
 }
