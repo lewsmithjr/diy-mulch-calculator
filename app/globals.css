@@ -32,37 +32,12 @@ body {
 }
 
 /* ── Kit.com form overrides ─────────────────────────────────────
-   Hide the large photo and heading; collapse 2-column layout to
-   a single full-width column centered inside our gate card.
+   Layout is fixed via JS in MulchCalculator (inline styles need JS).
+   These CSS rules handle anything not covered by the JS pass.
    ──────────────────────────────────────────────────────────────── */
-
-/* Form fills our container */
 .formkit-form {
   width: 100% !important;
-}
-
-/* Hide the large photo column */
-.formkit-form .formkit-background {
-  display: none !important;
-}
-
-/* Hide the photo's column wrapper entirely */
-.formkit-form [data-element="column"]:has(.formkit-background) {
-  display: none !important;
-}
-
-/* Hide "Get the Mulch Calculator" heading — context is already above */
-.formkit-form .formkit-header {
-  display: none !important;
-}
-
-/* Collapse the 2-col flex row so the fields column fills full width */
-.formkit-form [data-style="full"] {
-  display: block !important;
-}
-
-/* Fields column — full width */
-.formkit-form .formkit-column {
-  width: 100% !important;
-  max-width: 100% !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
 }

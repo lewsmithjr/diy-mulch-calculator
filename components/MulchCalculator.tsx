@@ -99,6 +99,41 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
 
     if (!scriptInjected.current && formContainerRef.current) {
       scriptInjected.current = true;
+
+      // Once Kit.com renders its form, strip the photo column and
+      // make the fields column fill full width (Kit.com uses inline
+      // styles so CSS overrides alone aren't reliable).
+      const layoutFixer = new MutationObserver(() => {
+        const container = formContainerRef.current;
+        if (!container) return;
+        const row = container.querySelector<HTMLElement>("[data-style='full']");
+        if (!row) return;
+
+        // Switch the 2-col flex row to a simple block so columns stack
+        row.style.display = "block";
+
+        row.querySelectorAll<HTMLElement>("[data-element='column']").forEach((col) => {
+          if (col.querySelector(".formkit-background")) {
+            // Photo column — hide entirely
+            col.style.display = "none";
+          } else {
+            // Fields column — expand to full width, remove inline bg color
+            col.style.width = "100%";
+            col.style.maxWidth = "100%";
+            col.style.backgroundColor = "transparent";
+            col.style.padding = "0";
+          }
+        });
+
+        // Hide the large heading Kit.com injects
+        const header = container.querySelector<HTMLElement>(".formkit-header");
+        if (header) header.style.display = "none";
+
+        layoutFixer.disconnect();
+      });
+
+      layoutFixer.observe(formContainerRef.current, { childList: true, subtree: true });
+
       const script = document.createElement("script");
       script.src = "https://reluctant-diyers.kit.com/65d48e0bd2/index.js";
       script.async = true;
