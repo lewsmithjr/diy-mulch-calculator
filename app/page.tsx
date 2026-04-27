@@ -1,5 +1,6 @@
 import Link from "next/link";
-import EmailGate from "@/components/EmailGate";
+import Hero from "@/components/Hero";
+import MulchCalculator from "@/components/MulchCalculator";
 
 export default async function Home({
   searchParams,
@@ -12,7 +13,12 @@ export default async function Home({
   return (
     <>
       <main className="flex flex-col flex-1">
-        <EmailGate initiallyUnlocked={initiallyUnlocked} />
+        <Hero />
+        <div className="flex flex-col flex-1 items-center px-4 pb-16 bg-[var(--color-rdiy-cream)]">
+          <div className="w-full max-w-2xl mt-8">
+            <MulchCalculator initiallyUnlocked={initiallyUnlocked} />
+          </div>
+        </div>
       </main>
       <footer className="border-t border-gray-100 bg-white py-6 px-4 text-center text-sm text-gray-400 print:hidden">
         <a

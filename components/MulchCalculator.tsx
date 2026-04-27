@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import BedEntry, { calcBedSqft, type Bed } from "@/components/BedEntry";
 
@@ -44,13 +44,21 @@ function bedDescription(bed: Bed, index: number): string {
   }
 }
 
-export default function MulchCalculator() {
+interface MulchCalculatorProps {
+  initiallyUnlocked: boolean;
+}
+
+export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorProps) {
   const [sqftMode, setSqftMode] = useState<SqftMode | null>(null);
   const [directSqft, setDirectSqft] = useState("");
   const [beds, setBeds] = useState<Bed[]>([newBed()]);
   const [depth, setDepth] = useState<number>(2);
   const [outputMode, setOutputMode] = useState<OutputMode>("bags");
   const [bagSize, setBagSize] = useState<number>(2);
+  const [unlocked, setUnlocked] = useState(initiallyUnlocked);
+
+  const formContainerRef = useRef<HTMLDivElement>(null);
+  const scriptInjected = useRef(false);
 
   const totalSqft =
     sqftMode === "direct"
@@ -61,6 +69,48 @@ export default function MulchCalculator() {
   const bagResult = Math.ceil((totalSqft * DEPTH_MULTIPLIERS[depth]) / bagSize);
 
   const hasResult = totalSqft > 0;
+  const showGate = hasResult && sqftMode !== null && !unlocked;
+
+  // Check localStorage on mount — return visitors skip the form
+  useEffect(() => {
+    if (localStorage.getItem("mulch_calc_unlocked") === "true") {
+      setUnlocked(true);
+    }
+  }, []);
+
+  // Wire up Kit.com unlock detection and inject the form when the gate appears
+  useEffect(() => {
+    if (!showGate) return;
+
+    const reveal = () => {
+      localStorage.setItem("mulch_calc_unlocked", "true");
+      setUnlocked(true);
+    };
+
+    document.addEventListener("formkit:submit", reveal);
+
+    const observer = new MutationObserver(() => {
+      if (document.querySelector(".formkit-alert-success")) {
+        reveal();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    if (!scriptInjected.current && formContainerRef.current) {
+      scriptInjected.current = true;
+      const script = document.createElement("script");
+      script.src = "https://reluctant-diyers.kit.com/65d48e0bd2/index.js";
+      script.async = true;
+      script.setAttribute("data-uid", "65d48e0bd2");
+      formContainerRef.current.appendChild(script);
+    }
+
+    return () => {
+      document.removeEventListener("formkit:submit", reveal);
+      observer.disconnect();
+    };
+  }, [showGate]);
 
   function addBed() {
     setBeds((prev) => [...prev, newBed()]);
@@ -272,8 +322,24 @@ export default function MulchCalculator() {
           </section>
         )}
 
+        {/* ── EMAIL GATE — shown when result is ready but user hasn't submitted ── */}
+        {showGate && (
+          <section className="rounded-2xl border-2 border-[var(--color-rdiy-green)] p-6 text-center bg-[var(--color-rdiy-green-light)]">
+            <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-rdiy-green-dark)] mb-1">
+              Your result is ready!
+            </p>
+            <p className="text-gray-600 text-sm mb-5">
+              Enter your email for instant access — no spam, unsubscribe anytime.
+            </p>
+            <div ref={formContainerRef} className="w-full" />
+            <a href="/privacy" className="text-xs text-gray-400 underline hover:text-gray-600 mt-3 inline-block">
+              Privacy Policy
+            </a>
+          </section>
+        )}
+
         {/* ── RESULT ── */}
-        {sqftMode !== null && hasResult && (
+        {sqftMode !== null && hasResult && unlocked && (
           <section className="bg-[var(--color-rdiy-green)] rounded-2xl p-6 text-white text-center">
             <div className="text-sm font-medium opacity-80 mb-1 uppercase tracking-wide">
               You need
@@ -319,7 +385,7 @@ export default function MulchCalculator() {
       </div>
 
       {/* ── PRINT-ONLY SUMMARY ── */}
-      {hasResult && sqftMode !== null && (
+      {hasResult && sqftMode !== null && unlocked && (
         <div className="sr-only print:not-sr-only print-summary">
           <div className="flex items-center gap-4 mb-6 pb-4 border-b-2 border-black">
             <Image
@@ -336,7 +402,6 @@ export default function MulchCalculator() {
 
           <table className="w-full text-sm border-collapse mb-6">
             <tbody>
-              {/* Beds breakdown */}
               {sqftMode === "beds" && beds.filter(b => calcBedSqft(b) > 0).map((bed, i) => (
                 <tr key={bed.id} className="border-b border-gray-200">
                   <td className="py-2 text-gray-500 w-1/2">{bedDescription(bed, i).split("=")[0].trim()}</td>
@@ -344,7 +409,6 @@ export default function MulchCalculator() {
                 </tr>
               ))}
 
-              {/* Total sq ft */}
               <tr className="border-b-2 border-black font-bold">
                 <td className="py-2">
                   {sqftMode === "direct" ? "Total area entered" : `Total (${beds.filter(b => calcBedSqft(b) > 0).length} bed${beds.filter(b => calcBedSqft(b) > 0).length !== 1 ? "s" : ""})`}
