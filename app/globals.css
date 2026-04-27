@@ -36,8 +36,5 @@ body {
    These CSS rules handle anything not covered by the JS pass.
    ──────────────────────────────────────────────────────────────── */
 .formkit-form {
-  width: 100% !important;
-  box-shadow: none !important;
-  border: none !important;
-  background: transparent !important;
+  margin: 0 auto !important;
 }

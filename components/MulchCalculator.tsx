@@ -371,17 +371,14 @@ export default function MulchCalculator({ initiallyUnlocked }: MulchCalculatorPr
 
         {/* ── EMAIL GATE — shown when result is ready but user hasn't submitted ── */}
         {showGate && (
-          <section className="rounded-2xl border-2 border-[var(--color-rdiy-green)] p-6 text-center bg-[var(--color-rdiy-green-light)]">
+          <section className="text-center pt-2">
             <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-rdiy-green-dark)] mb-1">
               Your result is ready!
             </p>
-            <p className="text-gray-600 text-sm mb-5">
+            <p className="text-gray-500 text-sm mb-4">
               Enter your email for instant access — no spam, unsubscribe anytime.
             </p>
             <div ref={formContainerRef} className="w-full" />
-            <a href="/privacy" className="text-xs text-gray-400 underline hover:text-gray-600 mt-3 inline-block">
-              Privacy Policy
-            </a>
           </section>
         )}
 
