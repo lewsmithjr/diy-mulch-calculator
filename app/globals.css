@@ -32,12 +32,22 @@ body {
 }
 
 /* ── Kit.com form overrides ─────────────────────────────────────
-   Hide the large photo and heading; let Kit.com style everything
-   else. Ensure the field column expands to full width.
+   Hide the large photo and heading; collapse 2-column layout to
+   a single full-width column centered inside our gate card.
    ──────────────────────────────────────────────────────────────── */
+
+/* Form fills our container */
+.formkit-form {
+  width: 100% !important;
+}
 
 /* Hide the large photo column */
 .formkit-form .formkit-background {
+  display: none !important;
+}
+
+/* Hide the photo's column wrapper entirely */
+.formkit-form [data-element="column"]:has(.formkit-background) {
   display: none !important;
 }
 
@@ -46,11 +56,12 @@ body {
   display: none !important;
 }
 
-/* When the photo column is hidden, let the fields column fill the row */
+/* Collapse the 2-col flex row so the fields column fills full width */
 .formkit-form [data-style="full"] {
-  flex-direction: column !important;
+  display: block !important;
 }
 
+/* Fields column — full width */
 .formkit-form .formkit-column {
   width: 100% !important;
   max-width: 100% !important;
