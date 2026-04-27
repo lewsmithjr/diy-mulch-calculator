@@ -21,23 +21,17 @@ export default function Hero() {
         }}
       />
 
-      <div className="relative max-w-2xl mx-auto px-4 pt-10 pb-14 flex flex-col items-center text-center gap-5">
+      <div className="relative max-w-2xl mx-auto px-4 pt-6 pb-10 flex flex-col items-center text-center gap-3">
         <Image
           src="/RDIYers Vector WHITE (2).png"
           alt="Reluctant DIYers"
-          width={220}
-          height={80}
+          width={160}
+          height={58}
           priority
         />
 
-        {/* Social proof badge */}
-        <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-sm text-white/85">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A84C] flex-shrink-0" />
-          Join countless DIYers who stopped overbuying
-        </div>
-
         <h1
-          className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight"
+          className="text-2xl sm:text-3xl font-bold leading-tight tracking-tight"
           style={{ fontFamily: "var(--font-fraunces)" }}
         >
           How Much Mulch Do You{" "}
@@ -47,39 +41,34 @@ export default function Hero() {
           Need?
         </h1>
 
-        <p className="text-base sm:text-lg max-w-lg leading-relaxed" style={{ opacity: 0.82 }}>
-          Stop guessing and stop overbuying. Enter your email below for instant
-          access to our free mulch calculator — handles bulk orders and bags.
-        </p>
-
         {/* Stat pills */}
-        <div className="flex gap-4 flex-wrap justify-center w-full">
-          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
+        <div className="flex gap-3 flex-wrap justify-center w-full mt-1">
+          <div className="flex-1 min-w-[120px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-4 py-3 text-center">
             <strong
-              className="block text-5xl leading-none mb-1"
+              className="block text-4xl leading-none mb-0.5"
               style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
             >
               ~30%
             </strong>
-            <span className="text-sm text-white/80 leading-snug">avg overage when<br />estimating by eye</span>
+            <span className="text-xs text-white/80 leading-snug">avg overage when<br />estimating by eye</span>
           </div>
-          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
+          <div className="flex-1 min-w-[120px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-4 py-3 text-center">
             <strong
-              className="block text-5xl leading-none mb-1"
+              className="block text-4xl leading-none mb-0.5"
               style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
             >
               2 min
             </strong>
-            <span className="text-sm text-white/80 leading-snug">to get your<br />exact number</span>
+            <span className="text-xs text-white/80 leading-snug">to get your<br />exact number</span>
           </div>
-          <div className="flex-1 min-w-[140px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-5 py-4 text-center">
+          <div className="flex-1 min-w-[120px] bg-white/[0.12] border border-white/[0.25] rounded-xl px-4 py-3 text-center">
             <strong
-              className="block text-5xl leading-none mb-1"
+              className="block text-4xl leading-none mb-0.5"
               style={{ fontFamily: "var(--font-fraunces)", color: "#C9A84C" }}
             >
               $0
             </strong>
-            <span className="text-sm text-white/80 leading-snug">completely<br />free to use</span>
+            <span className="text-xs text-white/80 leading-snug">completely<br />free to use</span>
           </div>
         </div>
       </div>
